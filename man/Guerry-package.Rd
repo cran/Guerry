@@ -24,7 +24,7 @@ but with still-limited statistical tools:  Can rates of various crimes be relate
 to multiple causes or predictors? Are the rates and ascribable causes in France 
 similar or different to those found in England?
 
-The \pkg{Guerry} package comprises maps of France in 1830, data from A.-M. Guerry and others, and 
+The \pkg{Guerry} package comprises maps of France in 1830, multivariate data from A.-M. Guerry and others, and 
 statistical and graphic methods related to Guerry's \emph{Moral Statistics of France}.
 The goal of providing these as an R package is to facilitate the exploration and
 development of statistical and graphic methods for multivariate data in a
@@ -34,8 +34,8 @@ geo-spatial context.
 \tabular{ll}{
 Package: \tab Guerry\cr
 Type: \tab Package\cr
-Version: \tab 1.3\cr
-Date: \tab 2009-11-19\cr
+Version: \tab 1.5-0\cr
+Date: \tab 2011-11-02\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
 }
