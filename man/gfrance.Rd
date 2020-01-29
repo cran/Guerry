@@ -26,9 +26,9 @@ In the present version, the PROJ4 projection is not specified.
 }
 \source{
 Friendly, M. (2007).
-Supplementary materials for André-Michel Guerry's Moral Statistics of France:
+Supplementary materials for Andr?-Michel Guerry's Moral Statistics of France:
 Challenges for Multivariate Spatial Analysis,
-\url{http://www.math.yorku.ca/SCS/Gallery/guerry/}.
+\url{http://www.datavis.ca/gallery/guerry/}.
 
 }
 \references{
@@ -46,6 +46,12 @@ plot(gfrance)   ## just show the map outline
 
 # Show basic choropleth plots of some of the variables
 spplot(gfrance, "Crime_pers")
+
+# use something like Guerry's pallete, where dark = Worse
+my.palette <- rev(RColorBrewer::brewer.pal(n = 9, name = "PuBu"))
+spplot(gfrance, "Crime_pers", col.regions = my.palette, cuts = 8)
+
+
 spplot(gfrance, "Crime_prop")
 
 # Note that spplot assumes all variables are on the same scale for comparative plots
@@ -65,7 +71,5 @@ local({
 }) 
 }
 }
-\keyword{
-datasets
-spatial
-}
+\keyword{datasets}
+\keyword{spatial}
