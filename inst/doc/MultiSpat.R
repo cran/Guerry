@@ -2,6 +2,7 @@
 knitr::opts_chunk$set(
   collapse = TRUE,
   warning = FALSE,
+  message = FALSE,   # suppress package loading messages
   comment = "#>",
   fig.height = 3,
   fig.width = 3,
@@ -9,21 +10,24 @@ knitr::opts_chunk$set(
 )
 
 ## -----------------------------------------------------------------------------
-library(Guerry) # Guerry's data
-library(sp) # management of spatial data
-library(ade4) # multivariate analysis
-library(adegraphics) # graphical representation
-library(spdep) # spatial dependency
-library(adespatial) # multivariate spatial analysis
+library(Guerry)       # Guerry's data
+library(sp)           # management of spatial data
+library(ade4)         # multivariate analysis
+library(adegraphics)  # graphical representation
+library(spdep)        # spatial dependency
+library(adespatial)   # multivariate spatial analysis
+
+## -----------------------------------------------------------------------------
+names(gfrance85)
 
 ## -----------------------------------------------------------------------------
  data(gfrance85)
- df <- data.frame(gfrance85)[, 7:12] # the 6 variables
- france.map <- as(gfrance85, "SpatialPolygons") # the map
- xy <- coordinates(gfrance85) # spatial coordinates
- dep.names <- data.frame(gfrance85)[, 6] # departement names
- region.names <- data.frame(gfrance85)[, 5] # region names
- col.region <- colors()[c(149, 254, 468, 552, 26)] # colors for region
+ df           <- data.frame(gfrance85)[, 7:12]    # the 6 variables
+ france.map   <- as(gfrance85, "SpatialPolygons") # the map
+ xy           <- coordinates(gfrance85)           # spatial coordinates
+ dep.names    <- data.frame(gfrance85)[, 6]       # departement names
+ region.names <- data.frame(gfrance85)[, 5]       # region names
+ col.region   <- colors()[c(149, 254, 468, 552, 26)] # colors for region
 
 ## -----------------------------------------------------------------------------
 pca <- dudi.pca(df, scannf = FALSE, nf = 3)
