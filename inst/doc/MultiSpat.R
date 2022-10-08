@@ -17,10 +17,10 @@ library(adegraphics)  # graphical representation
 library(spdep)        # spatial dependency
 library(adespatial)   # multivariate spatial analysis
 
-## -----------------------------------------------------------------------------
+## ----names--------------------------------------------------------------------
 names(gfrance85)
 
-## -----------------------------------------------------------------------------
+## ----components---------------------------------------------------------------
  data(gfrance85)
  df           <- data.frame(gfrance85)[, 7:12]    # the 6 variables
  france.map   <- as(gfrance85, "SpatialPolygons") # the map
@@ -29,7 +29,7 @@ names(gfrance85)
  region.names <- data.frame(gfrance85)[, 5]       # region names
  col.region   <- colors()[c(149, 254, 468, 552, 26)] # colors for region
 
-## -----------------------------------------------------------------------------
+## ----dudi-pca-----------------------------------------------------------------
 pca <- dudi.pca(df, scannf = FALSE, nf = 3)
 
 ## -----------------------------------------------------------------------------
