@@ -2,15 +2,15 @@ Package: Guerry
 Type: Package
 Title: Maps, Data and Methods Related to Guerry (1833) "Moral
         Statistics of France"
-Version: 1.8.0
-Date: 2022-10-04
+Version: 1.8.1
+Date: 2023-05-05
 Authors@R: c(
              person(given = "Michael", 
                    family = "Friendly", 
                    role=c("aut", "cre"), 
                    email="friendly@yorku.ca",
                    comment = c(ORCID = "0000-0002-3237-0941")),
-             person(given = "Stéphane", 
+             person(given = "Stephane", 
                    family = "Dray", 
                    role="aut", 
                    email="stephane.dray@univ-lyon1.fr",
@@ -21,7 +21,7 @@ Authors@R: c(
                    email = "Roger.Bivand@nhh.no")
             )
 Maintainer: Michael Friendly <friendly@yorku.ca>
-Encoding: latin1
+Encoding: UTF-8
 Language: en-US
 Depends: R (>= 3.5.0)
 Imports: sp
@@ -38,9 +38,9 @@ LazyLoad: yes
 LazyData: yes
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2022-10-08 17:30:19 UTC; friendly
+Packaged: 2023-05-05 18:53:55 UTC; friendly
 Author: Michael Friendly [aut, cre] (<https://orcid.org/0000-0002-3237-0941>),
-  Stéphane Dray [aut] (<https://orcid.org/0000-0003-0153-1105>),
+  Stephane Dray [aut] (<https://orcid.org/0000-0003-0153-1105>),
   Roger Bivand [ctb]
 Repository: CRAN
-Date/Publication: 2022-10-08 17:50:02 UTC
+Date/Publication: 2023-05-05 19:10:02 UTC
