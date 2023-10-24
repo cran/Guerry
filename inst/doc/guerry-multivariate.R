@@ -9,6 +9,10 @@ knitr::opts_chunk$set(
   dpi = 96
 )
 
+# packages to be cited here. Code at the end automatically updates packages.bib
+to.cite <- c("car", "effects", "ggplot2", "GGally", "ggbiplot")
+
+
 ## ----load---------------------------------------------------------------------
 library(Guerry)         # Guerry data
 library(car)            # better scatterplots
@@ -111,11 +115,16 @@ corrgram(Guerry[,4:9],
          lwd=2)
 
 ## ----guerry.pca---------------------------------------------------------------
-gdata <- Guerry[1:9]    # keep only main variables;
-gdata <- Guerry[-86,]   # delete Corsica (Region==NA)
+gdata <- Guerry |>
+  select(Region, Crime_pers:Suicides) |>   # keep only main variables
+  filter(!is.na(Region))                   # delete Corsica (Region==NA)
 
-guerry.pca <- prcomp(gdata[,4:9], scale=TRUE)
+guerry.pca <- gdata |>
+  select(-Region) |>
+  prcomp(scale = TRUE)
+
 print(guerry.pca, digits=3)
+
 
 ## ----biplot1------------------------------------------------------------------
 #  if(!require(ggbiplot)) remotes::install_github("vqv/ggbiplot")
@@ -201,4 +210,9 @@ heplot(crime.can, fill=TRUE, fill.alpha=0.1,
        var.col = "black", 
        var.cex = 1.3,
        cex=1.4, cex.lab=1.3)
+
+## ----write-bib, echo = FALSE--------------------------------------------------
+# write a packages.bib file of the packages (.packages()) that have been used here
+pkgs <- unique(c(to.cite, .packages()))
+knitr::write_bib(pkgs, file = here::here("vignettes", "packages.bib"))
 
