@@ -114,6 +114,21 @@ corrgram(Guerry[,4:9],
          order=TRUE,
          lwd=2)
 
+## ----corrplot-----------------------------------------------------------------
+library(corrplot)
+Guerry.cor <- Guerry |> 
+  dplyr::select(where(is.numeric), -dept) |>
+  tidyr::drop_na() |>
+  cor() 
+
+corrplot.mixed(Guerry.cor,
+  order = "AOE", 
+  lower = "ellipse",
+  upper = "pie",
+  tl.pos = "lt",
+  tl.col = "black")
+
+
 ## ----guerry.pca---------------------------------------------------------------
 gdata <- Guerry |>
   select(Region, Crime_pers:Suicides) |>   # keep only main variables
@@ -127,14 +142,14 @@ print(guerry.pca, digits=3)
 
 
 ## ----biplot1------------------------------------------------------------------
-#  if(!require(ggbiplot)) remotes::install_github("vqv/ggbiplot")
-#  library(ggbiplot) # A ggplot2 based biplot
-#  ggbiplot(guerry.pca, groups=gdata$Region,
-#           ellipse=TRUE,
-#           var.scale = 3, varname.size = 5) +
-#    theme_bw() +
-#    labs(color="Region") +
-#    theme(legend.position = c(0.1, 0.8))
+# if(!require(ggbiplot)) remotes::install_github("vqv/ggbiplot")
+# library(ggbiplot) # A ggplot2 based biplot
+# ggbiplot(guerry.pca, groups=gdata$Region,
+#          ellipse=TRUE,
+#          var.scale = 3, varname.size = 5) +
+#   theme_bw() +
+#   labs(color="Region") +
+#   theme(legend.position = c(0.1, 0.8))
 
 ## ----ggbiplot-----------------------------------------------------------------
 knitr::include_graphics("figures/ggbiplot.png")
@@ -171,15 +186,15 @@ Anova(crime.mod1)
 Anova(crime.mod2)
 
 ## ----mra-effect1-code---------------------------------------------------------
-#  plot(predictorEffects(crime.mod1, ~ Region + Literacy + Infants + Suicides),
-#       lwd=2, main="")
+# plot(predictorEffects(crime.mod1, ~ Region + Literacy + Infants + Suicides),
+#      lwd=2, main="")
 
 ## ----mra-effect1--------------------------------------------------------------
 knitr::include_graphics("figures/mra-effect1.png")
 
 ## ----mra-effect2-code---------------------------------------------------------
-#  plot(predictorEffects(crime.mod2, ~ Region + Literacy + Infants + Suicides),
-#       lwd=2, main="")
+# plot(predictorEffects(crime.mod2, ~ Region + Literacy + Infants + Suicides),
+#      lwd=2, main="")
 
 ## ----mra-effect2--------------------------------------------------------------
 knitr::include_graphics("figures/mra-effect2.png")
@@ -205,14 +220,15 @@ crime.can <- candisc(crime.mod)
 crime.can
 
 ## ----hecan--------------------------------------------------------------------
-par(mar = c(3,3,1,1)+.1)
+par(mar = c(3,3,1,7)+.1)
 heplot(crime.can, fill=TRUE, fill.alpha=0.1,
-       var.col = "black", 
+       var.col = "black",
        var.cex = 1.3,
-       cex=1.4, cex.lab=1.3)
+       cex=1.4, cex.lab=1.3,
+       xpd=TRUE)
 
 ## ----write-bib, echo = FALSE--------------------------------------------------
 # write a packages.bib file of the packages (.packages()) that have been used here
 pkgs <- unique(c(to.cite, .packages()))
-knitr::write_bib(pkgs, file = here::here("vignettes", "packages.bib"))
+knitr::write_bib(pkgs, file = "packages.bib")
 

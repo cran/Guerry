@@ -4,10 +4,11 @@ knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE,   # suppress package loading messages
   comment = "#>",
-  fig.height = 3,
-  fig.width = 3,
+  fig.height = 3.5,
+  fig.width = 3.5,
   fig.align = "center"
 )
+options(digits = 4)
 
 ## -----------------------------------------------------------------------------
 library(Guerry)       # Guerry's data
@@ -22,11 +23,13 @@ names(gfrance85)
 
 ## ----components---------------------------------------------------------------
  data(gfrance85)
- df           <- data.frame(gfrance85)[, 7:12]    # the 6 variables
+ gdata <- gfrance85@data                          # the Guerry data.frame
+ vars <- c("Crime_pers", "Crime_prop", "Literacy", "Donations", "Infants", "Suicides")
+ df           <- gdata[, vars]                    # the 6 variables
  france.map   <- as(gfrance85, "SpatialPolygons") # the map
  xy           <- coordinates(gfrance85)           # spatial coordinates
- dep.names    <- data.frame(gfrance85)[, 6]       # departement names
- region.names <- data.frame(gfrance85)[, 5]       # region names
+ dep.names    <- gdata[, "Department"]            # departement names
+ region.names <- gdata[, "Region"]                # region names
  col.region   <- colors()[c(149, 254, 468, 552, 26)] # colors for region
 
 ## ----dudi-pca-----------------------------------------------------------------
@@ -38,20 +41,34 @@ biplot(pca, plabel.cex = 0.8)
 ## -----------------------------------------------------------------------------
 pca$eig/sum(pca$eig) * 100
 
-## -----------------------------------------------------------------------------
+## ----corcircle----------------------------------------------------------------
 s.corcircle(pca$co)
 
 ## ----fig.width = 4, fig.height  = 4-------------------------------------------
-s.label(pca$li, ppoint.col = col.region[region.names], plabel.optim = TRUE, plabel.cex = 0.6)
-s.Spatial(france.map, col = col.region[region.names], plabel.cex = 0)
-s.class(xy, region.names, col = col.region, add = TRUE, ellipseSize = 0, starSize = 0)
+s.label(pca$li, 
+        ppoint.col = col.region[region.names], 
+        plabel.optim = TRUE, 
+        plabel.cex = 0.6)
+
+## ----fig.width = 4, fig.height  = 4-------------------------------------------
+s.Spatial(france.map, 
+          col = col.region[region.names], 
+          plabel.cex = 0)
+s.class(xy, 
+        region.names, 
+        col = col.region, 
+        add = TRUE, 
+        ellipseSize = 0, starSize = 0)
 
 ## -----------------------------------------------------------------------------
 nb <- poly2nb(gfrance85)
 lw <- nb2listw(nb, style = "W")
 
 ## -----------------------------------------------------------------------------
-s.Spatial(france.map, nb = nb, plabel.cex = 0, pSp.border = "white")
+s.Spatial(france.map, 
+          nb = nb, 
+          plabel.cex = 0, 
+          pSp.border = "white")
 
 ## -----------------------------------------------------------------------------
 moran.randtest(df, lw)
@@ -64,7 +81,12 @@ text(x[5], x.lag[5], dep.names[5], pos = 1, cex = 0.8)
 
 ## ----fig.dim = c(6,3)---------------------------------------------------------
 moran.randtest(pca$li, lw)
-s.value(xy, pca$li[, 1:2], Sp = france.map, pSp.border = "white", symbol = "circle", pgrid.draw = FALSE)
+s.value(xy, 
+        pca$li[, 1:2], 
+        Sp = france.map, 
+        pSp.border = "white", 
+        symbol = "circle", 
+        pgrid.draw = FALSE)
 
 ## -----------------------------------------------------------------------------
  bet <- bca(pca, region.names, scannf = FALSE, nf = 2)
@@ -83,11 +105,21 @@ plot(bet)
 s.arrow(bet$c1, plabel.cex = 0.8)
 
 ## ----fig.dim = c(4,4)---------------------------------------------------------
-s.label(bet$ls, as.character(dep.names), ppoint.cex = 0, plabel.optim = TRUE, plabel.col = col.region[region.names], plabel.cex = 0.5)
-s.class(bet$ls, fac = region.names, col = col.region, ellipse = 0, add = TRUE)
+s.label(bet$ls, 
+        as.character(dep.names), 
+        ppoint.cex = 0, 
+        plabel.optim = TRUE, 
+        plabel.col = col.region[region.names], plabel.cex = 0.5)
+s.class(bet$ls, 
+        fac = region.names, 
+        col = col.region, ellipse = 0, add = TRUE)
 
 ## ----fig.dim = c(6,3)---------------------------------------------------------
-s.value(xy, bet$ls, symbol = "circle", Sp = france.map, pSp.col = col.region[region.names], pSp.border = "transparent")
+s.value(xy, 
+        bet$ls, 
+        symbol = "circle", 
+        Sp = france.map, 
+        pSp.col = col.region[region.names], pSp.border = "transparent")
 
 ## ----fig.dim = c(6,4)---------------------------------------------------------
 poly.xy <- orthobasis.poly(xy, degree = 2)
